@@ -42,7 +42,7 @@ public class MainApp extends JFrame {
         btnAutomate1D.addActionListener(e -> launchAutomate1D());
         panel.add(btnAutomate1D);
 
-        JButton btnLaunchAutomaton = new JButton("Démarrer Automaton");
+        JButton btnLaunchAutomaton = new JButton("Règle de majorité");
         btnLaunchAutomaton.addActionListener(e -> launchAutomaton());
         panel.add(btnLaunchAutomaton);
 
