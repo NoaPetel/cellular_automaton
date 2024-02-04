@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -28,7 +30,7 @@ public class MainApp extends JFrame {
         // Le panel principal avec un GridLayout pour organiser les sous-panels en une seule colonne
         JPanel panel = new JPanel(new GridLayout(0, 1));
 
-        initialConfigField = createInputField(panel, "Configuration initiale (ex: 1011101):", "1011101");
+        initialConfigField = createInputField(panel, "Configuration initiale (ex: 1010101):", "1010101");
         ruleField = createInputField(panel, "Règle (0-255):", "170");
         delayField = createInputField(panel, "Délai (ms):", "1000");
         stepsField = createInputField(panel, "Nombre d'actualisations:", "1000");
@@ -39,6 +41,10 @@ public class MainApp extends JFrame {
         JButton btnAutomate1D = new JButton("Automate Élémentaire");
         btnAutomate1D.addActionListener(e -> launchAutomate1D());
         panel.add(btnAutomate1D);
+
+        JButton btnLaunchAutomaton = new JButton("Démarrer Automaton");
+        btnLaunchAutomaton.addActionListener(e -> launchAutomaton());
+        panel.add(btnLaunchAutomaton);
 
         JButton btnGameOfLife = new JButton("Jeu de la Vie");
         btnGameOfLife.addActionListener(this::launchGameOfLife);
@@ -95,6 +101,58 @@ public class MainApp extends JFrame {
             }
         }).start();
     }
+
+    private void launchAutomaton() {
+        int width = parseInt(gridSizeField.getText(), 10);
+        ArrayList<Cell> grid = new ArrayList<>();
+        for (int i = 0; i < width * width; i++) {
+            grid.add(new Cell(0));
+        }
+        grid.get(2 + 1 * width).setState(1);
+        grid.get(1 + 2 * width).setState(1);
+        grid.get(3 + 2 * width).setState(1);
+        grid.get(2 + 3 * width).setState(1);
+        ArrayList<ArrayList<Integer>> neighborCoords =  new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> neighborCoord = new ArrayList<>(Arrays.asList(0, 0));
+        neighborCoords.add(neighborCoord);
+        neighborCoord = new ArrayList<>(Arrays.asList(-1, -1));
+        neighborCoords.add(neighborCoord);
+        neighborCoord = new ArrayList<>(Arrays.asList(-1, 0));
+        neighborCoords.add(neighborCoord);
+        neighborCoord = new ArrayList<>(Arrays.asList(-1, 1));
+        neighborCoords.add(neighborCoord);
+        neighborCoord = new ArrayList<>(Arrays.asList(0, -1));
+        neighborCoords.add(neighborCoord);
+        neighborCoord = new ArrayList<>(Arrays.asList(0, 1));
+        neighborCoords.add(neighborCoord);
+        neighborCoord = new ArrayList<>(Arrays.asList(1, -1));
+        neighborCoords.add(neighborCoord);
+        neighborCoord = new ArrayList<>(Arrays.asList(1, 0));
+        neighborCoords.add(neighborCoord);
+        neighborCoord = new ArrayList<>(Arrays.asList(1, 1));
+        neighborCoords.add(neighborCoord);
+        RuleMajority rule = new RuleMajority(0, neighborCoords, width);
+        Automaton automaton = new Automaton(grid, 2, neighborCoords, 2, rule, width);
+        automaton.initializeRandomly();
+        AutomatonPanel panel = new AutomatonPanel(automaton, 10); // 10 pourrait être la taille de la cellule en pixels
+        setContentPane(new JScrollPane(panel));
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+        new Thread(() -> {
+            while (!automaton.isEvolutionComplete()) {
+                automaton.update();
+                panel.repaint(); // Demander la mise à jour de l'affichage
+                try {
+                    Thread.sleep(parseInt(delayField.getText(), 500)); // Délai entre chaque génération
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
 
     /**
      * Lance la simulation du Jeu de la Vie dans une nouvelle fenêtre.
