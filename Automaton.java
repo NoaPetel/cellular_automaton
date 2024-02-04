@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Automaton {
 
@@ -9,6 +10,7 @@ public class Automaton {
     int width;
     ArrayList<Cell> grid = new ArrayList<Cell>();
     IRule rule;
+    int generationIndex = 0;
 
     public Automaton(ArrayList<Cell> grid, int dimension, ArrayList<ArrayList<Integer>> neighbor, int state,
             IRule rule, int width) {
@@ -20,6 +22,14 @@ public class Automaton {
         this.neighbor = neighbor;
         this.width = width;
     }
+
+    public void initializeRandomly() {
+        Random random = new Random();
+        for (Cell cell : grid) {
+            cell.setState(random.nextInt(state)); // `state` est le nombre d'états possibles
+        }
+    }
+
 
     public void start() {
         printGrid();
@@ -60,6 +70,7 @@ public class Automaton {
             }
             printGrid();
         }
+        generationIndex++;
 
     }
 
@@ -79,6 +90,10 @@ public class Automaton {
             }
             System.out.println();
         }
+    }
+    public boolean isEvolutionComplete() {
+        // Vérifie si l'indice de génération actuel a atteint le nombre total de générations souhaitées
+        return generationIndex >= (width * dimension) - 1;
     }
 
 }
