@@ -4,36 +4,35 @@ public class GameOfLife {
 
     /**
      * Constructeur de la classe GameOfLife
-     * @param dimension
-     * @return void
+     * 
+     * @param dimension taille de la grille 2D
      */
     public GameOfLife(int dimension) {
         this.dimension = dimension;
         this.grid = new int[dimension][dimension];
     }
-/**
- * Méthode getGrid pour obtenir la grille
- * @return int[][]
- */
+
+    /**
+     * Méthode getGrid pour obtenir la grille
+     * 
+     * @return int[][]
+     */
     public int[][] getGrid() {
         return grid;
     }
-/**
- * Méthode initialiseRandom pour définir la grille aléatoirement
- * @return void
- */
+
+    /**
+     * Méthode initialiseRandom pour définir la grille aléatoirement
+     */
     public void initializeRandom() {
         for (int i = 0; i < dimension; i++) {
-        for (int j = 0; j < dimension; j++) {
-            grid[i][j] = Math.random() > 0.5 ? 1 : 0;
-        }
+            for (int j = 0; j < dimension; j++) {
+                grid[i][j] = Math.random() > 0.5 ? 1 : 0;
+            }
         }
     }
-/**
- * Méthode evolve pour faire évoluer la d'un nombre de pas donné
- * @param steps
- * @return void
- */
+
+  
     public void evolve(int steps) {
         for (int step = 0; step < steps; step++) {
             System.out.println("Étape " + step + " :");
@@ -44,7 +43,7 @@ public class GameOfLife {
                 for (int j = 0; j < dimension; j++) {
                     int neighbors = countNeighbors(i, j);
 
-                    if (neighbors == 3) {
+                    if (neighbors == 3) {//règles de transition
                         newGrid[i][j] = 1;
                     } else if (neighbors == 2) {
                         if (grid[i][j] == 1) {
@@ -61,12 +60,14 @@ public class GameOfLife {
             grid = newGrid;
         }
     }
-/**
- * Méthode countNeighbors pour compter les voisins
- * @param x absisse de la cellule
- * @param y ordonnée de la cellule
- * @return int nombre de cellules voisines vivantes
- */
+
+    /**
+     * Méthode countNeighbors pour compter les voisins
+     * 
+     * @param x absisse de la cellule
+     * @param y ordonnée de la cellule
+     * @return int nombre de cellules voisines vivantes
+     */
     private int countNeighbors(int x, int y) {
         int count = 0;
         int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
@@ -83,10 +84,12 @@ public class GameOfLife {
 
         return count;
     }
-/**
- * Méthode printGrid pour afficher la grille
- * @return void
- */
+
+    /**
+     * Méthode printGrid pour afficher la grille
+     * 
+     * @return void
+     */
     private void printGrid() {
         for (int i = 0; i < dimension; i++) {
             for (int j = 0; j < dimension; j++) {
@@ -96,10 +99,7 @@ public class GameOfLife {
         }
         System.out.println("----------------");
     }
-/**
- * Main pour tester la classe GameOfLife
- * @param args
- */
+
     public static void main(String[] args) {
         int dimension = 5;
         GameOfLife game = new GameOfLife(dimension);

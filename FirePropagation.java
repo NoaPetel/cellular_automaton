@@ -19,7 +19,6 @@ public class FirePropagation {
  * @param dimension Taille de la grille de simulation
  * @param vent Direction du vent
  * @param d Force du vent
- * @return void
  */
     public FirePropagation(int dimension, int vent, double d) {
         this.dimension = dimension;
@@ -59,8 +58,7 @@ public class FirePropagation {
     }
 /**
  * Méthode evolve pour faire évoluer la d'un nombre de pas donné
- * @param steps
- * @return void
+ * @param steps nombre d'étape de la simulation
  */
     public void evolve(int steps) {
         for (int step = 0; step < steps; step++) {
@@ -241,10 +239,7 @@ public class FirePropagation {
         }
         System.out.println("----------------");
     }
-/**
- * Méthode main pour lancer la simulation
- * @param args
- */
+
     public static void main(String[] args) {
         int dimension = 5;
 
