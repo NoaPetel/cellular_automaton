@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"<Unnamed>","l":"FirePropagation"},{"p":"<Unnamed>","l":"GameOfLife"}]
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"<Unnamed>","l":"Automate1D"},{"p":"<Unnamed>","l":"AutomateCellulaire"},{"p":"<Unnamed>","l":"Automaton"},{"p":"<Unnamed>","l":"Cell"},{"p":"<Unnamed>","l":"FirePropagation"},{"p":"<Unnamed>","l":"GameOfLife"},{"p":"<Unnamed>","l":"IRule"},{"p":"<Unnamed>","l":"MainApp"},{"p":"<Unnamed>","l":"Rule1D"},{"p":"<Unnamed>","l":"RuleMajority"}]

@@ -38,14 +38,13 @@ public class AutomateCellulaire {
 
     /**Méthode pour configurer l'état initial de l'automate
      * 
-     * @param etatInitial
+     * @param etatInitial etat initial de l'automate
      */
     public void setEtatInitial(List<List<Integer>> etatInitial) {
         this.etatCourant = new ArrayList<>(etatInitial);
     }
 
-     /**Méthode pour appliquer la règle de transition à l'ensemble de l'automate (1D)
-     * @return void
+    /**Méthode pour appliquer la règle de transition à l'ensemble de l'automate (1D)
      */
     public void appliquerTransition1D() {
         List<List<Integer>> nouvelEtat = new ArrayList<>();
@@ -70,7 +69,6 @@ public class AutomateCellulaire {
     }
 
     /**Méthode pour appliquer la règle de transition à l'ensemble de l'automate (2D)
-     * @return void
      */
     public void appliquerTransition2D() {
         List<List<Integer>> nouvelEtat = new ArrayList<>();
@@ -96,7 +94,6 @@ public class AutomateCellulaire {
     }
 
     /**Méthode pour afficher l'état actuel de l'automate
-     * @return void
      */
     public void afficherEtat() {
         System.out.println("Etape " + etape);
@@ -113,7 +110,7 @@ public class AutomateCellulaire {
     /**Méthode pour exécuter l'automate pour un certain nombre d'itérations
 
      * 
-     * @param iterations
+     * @param iterations nombre d'itérations
      */
     public void executer(int iterations) {
         for (int i = 0; i < iterations; i++) {

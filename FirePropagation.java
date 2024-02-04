@@ -37,9 +37,8 @@ public class FirePropagation {
     }
 /**
  * Méthode initialiseGrid pour initialiser la grille avec des cellules en feu, vide ou de forêt
- * @return void
  */
-    private void initializeGrid() {
+    public void initializeGrid() {
         Random rand = new Random();
 
         for (int i = 0; i < dimension; i++) {
@@ -65,7 +64,7 @@ public class FirePropagation {
             System.out.println("Étape " + step + " :");
             printGrid();
             int[][] newGrid = new int[dimension][dimension];
-            List<int[]> cellInFire = countCellsOnFire();
+            List<int[]> cellInFire = CellsOnFire();
             for (int i = 0; i < dimension; i++) {
                 for (int j = 0; j < dimension; j++) {
                     int neighbors = countNeighborsOnFire(i, j);
@@ -210,10 +209,10 @@ public class FirePropagation {
 
         return count;
     }/**
-    * Méthode countCellsOnFire pour compter le nombre de cellules en feu et recupere les coordonées
+    * Méthode CellsOnFire pour déterminer les coordonées des cellules en feu
     * @return List<int[]>
      */
-    private List<int[]> countCellsOnFire() { // Compte le nombre de cellules en feu et recupere les coordonées
+    private List<int[]> CellsOnFire() { 
         List<int[]> count = new ArrayList<>();
 
         for (int i = 0; i < dimension; i++) {
@@ -238,12 +237,5 @@ public class FirePropagation {
             System.out.println();
         }
         System.out.println("----------------");
-    }
-
-    public static void main(String[] args) {
-        int dimension = 5;
-
-        FirePropagation fireModel = new FirePropagation(dimension, 1, 0.5);
-        fireModel.evolve(50);
     }
 }
