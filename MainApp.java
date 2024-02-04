@@ -28,9 +28,9 @@ public class MainApp extends JFrame {
         // Le panel principal avec un GridLayout pour organiser les sous-panels en une seule colonne
         JPanel panel = new JPanel(new GridLayout(0, 1));
 
-        initialConfigField = createInputField(panel, "Configuration initiale (ex: 0001000):", "0001000");
+        initialConfigField = createInputField(panel, "Configuration initiale (ex: 1011101):", "1011101");
         ruleField = createInputField(panel, "Règle (0-255):", "170");
-        delayField = createInputField(panel, "Délai (ms):", "500");
+        delayField = createInputField(panel, "Délai (ms):", "1000");
         stepsField = createInputField(panel, "Nombre d'actualisations:", "1000");
         gridSizeField = createInputField(panel, "Taille de la grille:", "50");
         windDirectionField = createInputField(panel, "Direction du vent (1 > droite, 2 > gauche, 3 > bas, 4 > haut):", "1");
@@ -73,23 +73,29 @@ public class MainApp extends JFrame {
     /**
      * Lance la simulation de l'Automate Élémentaire dans une nouvelle fenêtre.
      */
+
     private void launchAutomate1D() {
         int gridSize = parseInt(gridSizeField.getText(), 100);
         int rule = parseInt(ruleField.getText(), 170);
         String initialConfig = initialConfigField.getText().trim();
 
-        Automate1D automaton = new Automate1D(gridSize, rule);
+        Automate1D automaton = new Automate1D(gridSize, rule, 1000);
         automaton.initializeFromString(initialConfig);
-        setContentPane(automaton);
-        revalidate();
-        repaint();
+
+        setContentPane(new JScrollPane(automaton)); // JScrollPane pour permettre le défilement
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
 
         int delay = parseInt(delayField.getText(), 500);
-        new Timer(delay, event -> automaton.evolve()).start();
+        new Timer(delay, event -> {
+            automaton.evolve();
+            if (automaton.isEvolutionComplete()) {
+                ((Timer) event.getSource()).stop();
+            }
+        }).start();
     }
+
     /**
      * Lance la simulation du Jeu de la Vie dans une nouvelle fenêtre.
      *
@@ -193,4 +199,5 @@ public class MainApp extends JFrame {
         SwingUtilities.invokeLater(MainApp::new);
     }
 }
+
 
