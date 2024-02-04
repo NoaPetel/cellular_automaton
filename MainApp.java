@@ -75,7 +75,7 @@ public class MainApp extends JFrame {
      */
 
     private void launchAutomate1D() {
-        int gridSize = parseInt(gridSizeField.getText(), 100);
+        int gridSize = parseInt(gridSizeField.getText(), 10);
         int rule = parseInt(ruleField.getText(), 170);
         String initialConfig = initialConfigField.getText().trim();
 
